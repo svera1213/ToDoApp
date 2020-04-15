@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ToDoApp</string>
+    <string name="list_name">My ToDo List</string>
+    <string name="add_btn_name">add</string>
+    <string name="save_btn_name">save</string>
+    <string name="delete_btn_name">delete</string>
+    <string name="date_name">Day, Date, Year</string>
+    <string name="sign_out_btn_name">sign out</string>
+
+    <string name="hint">Enter your task</string>
+</resources>
