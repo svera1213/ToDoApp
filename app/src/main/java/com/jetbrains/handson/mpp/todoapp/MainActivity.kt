@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -18,6 +19,7 @@ import com.jetbrains.handson.mpp.mobile.createApplicationScreenMessage
 import com.jetbrains.handson.mpp.todoapp.data.DataController
 import helpers.getCurrentDate
 import kotlinx.android.synthetic.main.activity_main.*
+import service.LoadingDialog
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.title).text = createApplicationScreenMessage()
         findViewById<TextView>(R.id.text_date_display).text = getCurrentDate()
         task_list.layoutManager = LinearLayoutManager(this)
+
+        val loadingDialog = LoadingDialog(this)
 
         val userUID = FirebaseAuth.getInstance().currentUser!!.uid
         val jsonRef: StorageReference = storageRef.child("tasks$userUID/file.json")
@@ -60,11 +64,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_save.setOnClickListener {
-            saveController.saveJsonData(jsonRef)
+            loadingDialog.showDialog()
+            val handler = Handler()
+            handler.postDelayed({
+                saveController.saveJsonData(jsonRef)
+                loadingDialog.hideDialog()
+            },5000)
         }
 
         btn_delete.setOnClickListener {
-            saveController.deleteJsonData(jsonRef, task_list)
+            loadingDialog.showDialog()
+            val handler = Handler()
+            handler.postDelayed({
+                saveController.deleteJsonData(jsonRef, task_list)
+                loadingDialog.hideDialog()
+            },5000)
         }
     }
 
