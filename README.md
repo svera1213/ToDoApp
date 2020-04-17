@@ -13,9 +13,9 @@ This app generates To Do lists for efficient task management.
 - Google Services
 
 Main/
-  ->  todoapp/
-  ->  helpers/
-  ->  service/
+  - todoapp/
+  - helpers/
+  - service/
     
 ## Contributions
 Pull requests are welcome. For major changes, please open an issue first to discuss your suggestions.
