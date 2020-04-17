@@ -17,7 +17,7 @@ class TaskAdapter(val data: MutableList<String>, val context: Context): Recycler
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.taskType?.text = data.get(position)
+        holder.taskType?.text = data[position]
     }
 }
 

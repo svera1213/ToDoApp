@@ -16,7 +16,7 @@ class DataController(val context: Context) {
 
     fun saveJsonData(jsonRef: StorageReference) {
         val file = File(context.cacheDir, "fileName")
-        val jsonDataString = createJson(1,"MyList", "CurrentUser", jsonFileData, context)
+        val jsonDataString = createJson(1,"MyList", "CurrentUser", jsonFileData)
         file.writeText(jsonDataString)
 
         val uriFile = Uri.fromFile(file)
