@@ -12,6 +12,8 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
@@ -23,8 +25,7 @@ import service.LoadingDialog
 
 class MainActivity : AppCompatActivity() {
 
-    private val storage = Firebase.storage
-    private val storageRef = storage.reference
+    val database = Firebase.database
 
     val saveController = DataController(this)
 
@@ -39,7 +40,9 @@ class MainActivity : AppCompatActivity() {
         val loadingDialog = LoadingDialog(this)
 
         val userUID = FirebaseAuth.getInstance().currentUser!!.uid
-        val jsonRef: StorageReference = storageRef.child("tasks$userUID/file.json")
+
+        val myRef: DatabaseReference = database.getReference("/users")
+
 
         val edittext = findViewById<EditText>(R.id.editText)
         btn_sign_out.isEnabled = true
@@ -67,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             loadingDialog.showDialog()
             val handler = Handler()
             handler.postDelayed({
-                saveController.saveJsonData(jsonRef)
+                saveController.saveData(myRef, userUID)
                 loadingDialog.hideDialog()
             },5000)
         }
@@ -76,7 +79,7 @@ class MainActivity : AppCompatActivity() {
             loadingDialog.showDialog()
             val handler = Handler()
             handler.postDelayed({
-                saveController.deleteJsonData(jsonRef, task_list)
+                saveController.deleteData(myRef, userUID, task_list)
                 loadingDialog.hideDialog()
             },5000)
         }
@@ -86,7 +89,8 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         val userUID = FirebaseAuth.getInstance().currentUser!!.uid
-        val jsonRef: StorageReference = storageRef.child("tasks$userUID/file.json")
-        saveController.getJsonData(jsonRef, task_list)
+        val myRef: DatabaseReference = database.getReference("/users")
+
+        saveController.getData(myRef, userUID, task_list);
     }
 }
