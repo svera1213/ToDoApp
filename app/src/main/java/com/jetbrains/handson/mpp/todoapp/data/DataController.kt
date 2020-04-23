@@ -34,7 +34,7 @@ class DataController(val context: Context) {
                 try {
                     jsonFileData = value!!.postTag!!.toMutableList()
                     task_list.adapter = TaskAdapter(jsonFileData, context)
-                    println("Data Saved !!")
+                    println("Data Loaded !!")
                 }
                 catch (e: Exception){
                     println(e)
@@ -48,8 +48,12 @@ class DataController(val context: Context) {
     }
 
     fun addTask(edit_text: EditText, task_list: RecyclerView)  {
-        jsonFileData.add(edit_text.text.toString())
-        task_list.adapter = TaskAdapter(jsonFileData, context)
+        val dataInput = edit_text.text.toString().trim()
+
+        if(dataInput.isNotEmpty() && !dataInput.contains("\\n".toRegex())){
+            jsonFileData.add(dataInput)
+            task_list.adapter = TaskAdapter(jsonFileData, context)
+        }
         edit_text.text.clear()
     }
 
