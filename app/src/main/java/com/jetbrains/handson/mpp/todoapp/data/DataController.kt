@@ -1,6 +1,7 @@
 package com.jetbrains.handson.mpp.todoapp.data
 
 import android.content.Context
+import android.os.Handler
 import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
@@ -11,6 +12,7 @@ import com.google.firebase.database.ktx.getValue
 import com.jetbrains.handson.mpp.todoapp.TaskAdapter
 import com.jetbrains.handson.mpp.todoapp.json.PostJson
 import helpers.createJsonData
+import service.MessageDialog
 
 class DataController(val context: Context) {
 
@@ -20,9 +22,11 @@ class DataController(val context: Context) {
         val jsonData = createJsonData(1,"MyList", userUID, jsonFileData)
         try {
             dataRef.child(userUID).setValue(jsonData)
+            println("Data Saved !!")
         }
         catch (e: Exception){
-            println(e)
+            val messageDialog = MessageDialog(context)
+            messageDialog.showMessage(e.toString())
         }
     }
 
@@ -32,12 +36,15 @@ class DataController(val context: Context) {
                 val value = dataSnapshot.getValue<PostJson>()
 
                 try {
-                    jsonFileData = value!!.postTag!!.toMutableList()
-                    task_list.adapter = TaskAdapter(jsonFileData, context)
-                    println("Data Loaded !!")
+                    if(value?.postTag != null){
+                        jsonFileData = value.postTag!!.toMutableList()
+                        task_list.adapter = TaskAdapter(jsonFileData, context)
+                        println("Data Loaded !!")
+                    }
                 }
                 catch (e: Exception){
-                    println(e)
+                    val messageDialog = MessageDialog(context)
+                    messageDialog.showMessage(e.toString())
                 }
             }
 
@@ -66,7 +73,8 @@ class DataController(val context: Context) {
             println("Tasks Deleted !!")
         }
         catch (e: Exception){
-            println(e)
+            val messageDialog = MessageDialog(context)
+            messageDialog.showMessage(e.toString())
         }
     }
 }
