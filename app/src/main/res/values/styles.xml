@@ -3,13 +3,14 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/velocityPrimary</item>
+        <item name="colorPrimaryDark">@color/velocityPrimaryDark</item>
+        <item name="colorAccent">@color/velocityPrimaryDark</item>
+        <item name="android:fontFamily">@font/open_sans_regular</item>
     </style>
 
     <style name="LoginTheme" parent="AppTheme">
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@color/velocityBase</item>
     </style>
 
 </resources>

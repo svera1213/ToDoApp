@@ -5,4 +5,10 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="messages">#A7B6BF</color>
     <color name="textMessage">#FF3222</color>
+
+    <color name="velocityPrimary">#f48158</color>
+    <color name="velocityBase">#f9f9f9</color>
+    <color name="velocityThird">#393940</color>
+    <color name="velocitySecond">#cbaba2</color>
+    <color name="velocityPrimaryDark">#c55c49</color>
 </resources>
