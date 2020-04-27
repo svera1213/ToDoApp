@@ -8,4 +8,6 @@
     <string name="sign_out_btn_name">sign out</string>
 
     <string name="hint">Enter your task</string>
+
+    <string name="youre_progress">Your\'re progress today...</string>
 </resources>
