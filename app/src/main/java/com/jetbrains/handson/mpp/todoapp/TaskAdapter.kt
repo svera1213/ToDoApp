@@ -4,12 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.jetbrains.handson.mpp.todoapp.data.DataController
+import helpers.updateProgressBar
 import kotlinx.android.synthetic.main.task_list_item.view.*
 
-class TaskAdapter(val data: MutableList<String>, val context: Context): RecyclerView.Adapter<ViewHolder>() {
+class TaskAdapter(val dataController: DataController, val context: Context, val progressbar: ProgressBar, val progresspecent: TextView): RecyclerView.Adapter<ViewHolder>() {
     override fun getItemCount(): Int {
-        return data.size
+        return dataController.jsonFileData.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -17,10 +21,26 @@ class TaskAdapter(val data: MutableList<String>, val context: Context): Recycler
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.taskType?.text = data[position]
+        holder.taskType?.text = dataController.jsonFileData[position]
+        setCheckBox(holder, position)
+        holder.doneTask?.setOnCheckedChangeListener { buttonView, isChecked ->
+            dataController.taskCompleted[position] = isChecked
+            dataController.setProgress()
+            updateProgressBar(dataController.progressPercent, progressbar, progresspecent)
+        }
+    }
+
+    private fun setCheckBox(holder: ViewHolder, position: Int) {
+        if(position <= dataController.taskCompleted.size - 1){
+            val boxChecked = dataController.taskCompleted[position]
+            holder.doneTask?.setChecked(boxChecked)
+            return
+        }
+        holder.doneTask?.setChecked(false)
     }
 }
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val taskType = view.task_card
+    val doneTask = view.check_box_task
 }

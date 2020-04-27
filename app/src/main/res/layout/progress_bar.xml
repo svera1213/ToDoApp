@@ -17,20 +17,19 @@
         android:background="@drawable/circle_background"
         style="?android:attr/progressBarStyleHorizontal"
         android:max="100"
-        android:progress="65"
         android:layout_marginStart="10dp"
         tools:ignore="RtlHardcoded" />
 
     <TextView
+        android:id="@+id/progressPercent"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center|left"
         android:layout_marginLeft="20dp"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textAlignment="center"
         android:fontFamily="@font/open_sans_regular"
         android:gravity="center"
-        android:text="0%"
         tools:ignore="RtlHardcoded" />
 
     <TextView

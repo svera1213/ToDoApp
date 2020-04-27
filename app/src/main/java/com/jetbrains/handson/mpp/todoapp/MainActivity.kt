@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -15,8 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import com.jetbrains.handson.mpp.mobile.createApplicationScreenMessage
 import com.jetbrains.handson.mpp.todoapp.data.DataController
 import helpers.getCurrentDate
@@ -45,6 +44,8 @@ class MainActivity : AppCompatActivity() {
 
 
         val edittext = findViewById<EditText>(R.id.editText)
+        val progressbar = findViewById<ProgressBar>(R.id.progressBar)
+        val progresspecent = findViewById<TextView>(R.id.progressPercent)
         btn_sign_out.isEnabled = true
 
         btn_sign_out.setOnClickListener {
@@ -63,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_add.setOnClickListener {
-            saveController.addTask(edittext, task_list)
+            saveController.addTask(edittext, task_list, progressbar, progresspecent)
         }
 
         btn_save.setOnClickListener {
@@ -79,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             loadingDialog.showDialog()
             val handler = Handler()
             handler.postDelayed({
-                saveController.deleteData(myRef, userUID, task_list)
+                saveController.deleteData(myRef, userUID, task_list, progressbar, progresspecent)
                 loadingDialog.hideDialog()
             },5000)
         }
@@ -91,6 +92,9 @@ class MainActivity : AppCompatActivity() {
         val userUID = FirebaseAuth.getInstance().currentUser!!.uid
         val myRef: DatabaseReference = database.getReference("/users")
 
-        saveController.getData(myRef, userUID, task_list);
+        val progressbar = findViewById<ProgressBar>(R.id.progressBar)
+        val progresspecent = findViewById<TextView>(R.id.progressPercent)
+
+        saveController.getData(myRef, userUID, task_list, progressbar, progresspecent)
     }
 }
